@@ -1,3 +1,22 @@
+# After change `terraform`, please run `terraform init -uprade`
+terraform {
+  required_version = ">= 1.0.0, < 2.0.0"
+  required_providers {
+    # Version 4.0.0 of the AWS Provider will be the last major version to
+    # support EC2-Classic resources as AWS plans to fully retire
+    # EC2-Classic Networking. See the AWS News Blog for additional details.
+    # https://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.0.0"
+    }
+  }
+}
+
+# 2022.09.03 `terraform plan` behavior changes:
+# `1 to add, 1 to update, 0 to destory` hashicorp/aws version ">4.0.0"
+# `2 to add, 0 to update, 1 to destory` hashicorp/aws version "<=4.0.0"
+
 provider "aws" {
   region = "us-east-2"
 }
